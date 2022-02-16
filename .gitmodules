@@ -1,0 +1,3 @@
+[submodule "node-qstat-relay"]
+	path = node-qstat-relay
+	url = https://github.com/iamrickyspanish/node-qstat-relay
