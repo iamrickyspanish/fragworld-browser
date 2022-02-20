@@ -1,5 +1,7 @@
 const { sendError, send, createError, json } = require("micro");
-const cors = require("micro-cors")();
+const cors = require("micro-cors")({
+  origin: process.env.CORS_ORIGIN || "*"
+});
 const mongoose = require("mongoose");
 const ServerModel = require("./src/serverModel");
 const axios = require("axios");
