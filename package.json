@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "micro",
-    "dev": "micro-dev"
+    "dev": "micro-dev -i db"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/iamrickyspanish/fragworld-browser#readme",
   "dependencies": {
+    "axios": "^0.26.0",
     "micro": "^9.3.4",
     "micro-cors": "^0.1.1",
     "micro-dev": "^3.0.0",

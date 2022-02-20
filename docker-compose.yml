@@ -1,17 +1,18 @@
 version: "3.3"
 services:
   relay:
-    build: node-qstat-relay
+    build: node-qstat-relay/
     restart: always
     container_name: node-qstat-relay
     volumes:
-      - ".:/app"
+      - "./node-qstat-relay:/app"
     # ports:
-    #   - "5000:3000"
-    #   - "27015:27015"
+    #   - "3002:3000"
   mongo:
     image: mongo
     restart: always
+    volumes:
+      - "./db:/data/db"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
@@ -27,6 +28,7 @@ services:
   api:
     environment:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
+      RELAY_URL: http://relay:3000/
     build: .
     container_name: server-browser-api
     links:
