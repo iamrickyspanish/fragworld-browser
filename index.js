@@ -1,4 +1,5 @@
 const { sendError, send, createError, json } = require("micro");
+const query = require("micro-query");
 const cors = require("micro-cors")({
   origin: process.env.CORS_ORIGIN || "*"
 });
@@ -15,7 +16,17 @@ module.exports = cors(async (req, res) => {
     }
 
     if (req.method === "GET") {
-      const { type } = await json(req);
+      let bodyData = {};
+      try {
+        bodyData = await json(req);
+      } catch (_) {
+        bodyData = {};
+      }
+      const queryData = query(req);
+      const { type } = {
+        ...queryData,
+        ...bodyData
+      };
       const servers = await ServerModel.find({ type });
 
       const data = {
@@ -31,9 +42,3 @@ module.exports = cors(async (req, res) => {
     sendError(req, res, e);
   }
 });
-
-// hosts: [
-//   "148.251.68.215:27015",
-//   "45.90.217.186:27015",
-//   "62.140.250.10:27015"
-// ]
