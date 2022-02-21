@@ -10,7 +10,9 @@ services:
     image: mongo
     restart: always
     volumes:
-      - "./db:/data/db"
+      - "./db/data:/data/db"
+      - "./db/migrations:/db/migrations"
+      - "./db/seed:/db/seed"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root

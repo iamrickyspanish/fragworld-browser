@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Half-Life",
+    "type": "a2s",
+    "mod": null
+  },
+  {
+    "name": "Counter-Strike",
+    "type": "a2s",
+    "mod": "cstrike"
+  }
+]
