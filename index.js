@@ -1,8 +1,7 @@
 const { sendError, send, createError, json } = require("micro");
 const query = require("micro-query");
 const cors = require("micro-cors")({
-  origin: process.env.CORS_ORIGIN || "*",
-  allowCredentials: false
+  origin: process.env.CORS_ORIGIN || "*"
 });
 const mongoose = require("mongoose");
 const ServerModel = require("./src/serverModel");
@@ -39,7 +38,7 @@ module.exports = cors(async (req, res) => {
         hosts: servers.map(({ host, port }) => `${host}:${port}`)
       };
       const result = await axios.get(process.env.RELAY_URL, { data });
-      return send(res, 200, result?.data || []);
+      return send(res, 200, Array, isArrayresult?.data || []);
     }
     throw createError(400, "invalid format");
   } catch (e) {
