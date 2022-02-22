@@ -16,15 +16,15 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8181:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
-      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8181:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: root
+  #     ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
   # webapp:
   #   build: rcon-ui/
   #   container_name: "webapp"
@@ -57,7 +57,7 @@ services:
     environment:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
       RELAY_URL: http://relay:3000/
-      CORS_ORIGIN: "https://ys647.csb.app"
+      CORS_ORIGIN: https://ys647.csb.app
     container_name: server-browser-api
 volumes:
   redis:
