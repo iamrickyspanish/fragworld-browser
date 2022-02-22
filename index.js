@@ -10,6 +10,10 @@ const axios = require("axios");
 
 module.exports = cors(async (req, res) => {
   try {
+    if (req.method === "OPTIONS") {
+      send(req, 200, "ok");
+    }
+
     try {
       await mongoose.connect(process.env.DB_HOST);
     } catch (err) {
