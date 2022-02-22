@@ -38,7 +38,7 @@ module.exports = cors(async (req, res) => {
         hosts: servers.map(({ host, port }) => `${host}:${port}`)
       };
       const result = await axios.get(process.env.RELAY_URL, { data });
-      return send(res, 200, Array, isArrayresult?.data || []);
+      return send(res, 200, Array.isArray(result?.data) ? result.data : []);
     }
     throw createError(400, "invalid format");
   } catch (e) {
