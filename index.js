@@ -11,7 +11,7 @@ const axios = require("axios");
 module.exports = cors(async (req, res) => {
   try {
     if (req.method === "OPTIONS") {
-      send(req, 200, "ok");
+      return send(req, 200, "ok");
     }
 
     try {
@@ -39,8 +39,7 @@ module.exports = cors(async (req, res) => {
         hosts: servers.map(({ host, port }) => `${host}:${port}`)
       };
       const result = await axios.get(process.env.RELAY_URL, { data });
-      const serverData = await result.data;
-      return send(res, 200, serverData);
+      return send(res, 200, result?.data || []);
     }
     throw createError(400, "invalid format");
   } catch (e) {
