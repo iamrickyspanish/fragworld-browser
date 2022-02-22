@@ -1,7 +1,8 @@
 const { sendError, send, createError, json } = require("micro");
 const query = require("micro-query");
 const cors = require("micro-cors")({
-  origin: process.env.CORS_ORIGIN || "*"
+  origin: process.env.CORS_ORIGIN || "*",
+  allowCredentials: false
 });
 const mongoose = require("mongoose");
 const ServerModel = require("./src/serverModel");
