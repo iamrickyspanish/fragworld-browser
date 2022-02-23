@@ -1,13 +1,11 @@
 const { sendError, send, createError, json } = require("micro");
 const query = require("micro-query");
-const cors = require("micro-cors")({
-  origin: process.env.CORS_ORIGIN || "*"
-});
+
 const mongoose = require("mongoose");
 const ServerModel = require("./src/serverModel");
 const axios = require("axios");
 
-module.exports = cors(async (req, res) => {
+module.exports = async (req, res) => {
   try {
     if (req.method === "OPTIONS") {
       return send(req, 200, "ok");
@@ -44,4 +42,4 @@ module.exports = cors(async (req, res) => {
   } catch (e) {
     sendError(req, res, e);
   }
-});
+};
