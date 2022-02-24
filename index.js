@@ -2,7 +2,7 @@ const { sendError, send, createError, json } = require("micro");
 const query = require("micro-query");
 
 const mongoose = require("mongoose");
-const ServerModel = require("./src/serverModel");
+const ServerModel = require("./db/models/Server");
 const axios = require("axios");
 
 module.exports = async (req, res) => {
