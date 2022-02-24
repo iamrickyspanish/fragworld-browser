@@ -25,5 +25,8 @@
     "micro-dev": "^3.0.0",
     "micro-query": "^0.3.0",
     "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "migrate-mongo": "^8.2.3"
   }
 }
