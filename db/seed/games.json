@@ -1,12 +1,16 @@
 [
   {
+    "_id": "hl",
     "name": "Half-Life",
     "type": "a2s",
+    "defaultPort": 27015,
     "mod": null
   },
   {
+    "_id": "cstrike",
     "name": "Counter-Strike",
     "type": "a2s",
+    "defaultPort": 27015,
     "mod": "cstrike"
   }
 ]

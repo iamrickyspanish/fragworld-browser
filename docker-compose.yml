@@ -7,7 +7,7 @@ services:
     volumes:
       - "./node-qstat-relay:/app"
   mongo:
-    image: mongo
+    image: mongo:4.0
     restart: always
     volumes:
       - "./db/data:/data/db"
