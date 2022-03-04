@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./start-worker.sh; micro",
-    "dev": "./start-worker.sh; micro-dev -i db"
+    "start": "/bin/bash ./start-worker.sh; micro",
+    "dev": "/bin/bash ./start-worker.sh; micro-dev -i db"
   },
   "repository": {
     "type": "git",
