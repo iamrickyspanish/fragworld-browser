@@ -6,6 +6,21 @@ services:
     container_name: node-qstat-relay
     volumes:
       - "./node-qstat-relay:/app"
+  # worker:
+  #   build: server-snapshot-worker
+  #   restart: always
+  #   container_name: server-snapshot-worker
+  #   environment:
+  #     TASK_SCHEDULE: "* * * * *"
+  #     DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
+  #     RELAY_URL: http://relay:3000/
+  #     TERM: xterm
+  #   links:
+  #     - mongo
+  #     - relay
+  #   volumes:
+  #     - "./server-snapshot-worker:/app"
+  #     - "./db/models:/db/models"
   mongo:
     image: mongo:4.0
     restart: always

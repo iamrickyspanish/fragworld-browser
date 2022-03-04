@@ -46,7 +46,7 @@ services:
       - api
   api:
     build: .
-    command: "npm start"
+    command: "npm run dev & npm run test"
     volumes:
       - ".:/app"
     links:

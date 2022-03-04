@@ -14,7 +14,8 @@ const run = async () => {
     await seedServers(savedGames);
     mongoose.connection.close();
   } catch (err) {
-    console.log(`DB ${err}`);
+    console.error(`DB ${err}`);
+    mongoose.connection.close();
   }
 };
 

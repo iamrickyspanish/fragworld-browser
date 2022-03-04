@@ -7,4 +7,3 @@ WORKDIR $ROOT
 VOLUME $ROOT
 
 CMD ["npm", "run", "dev"]
-# CMD ["npm", "i"]
