@@ -2,10 +2,8 @@ const { sendError, send, createError, json } = require("micro");
 const query = require("micro-query");
 
 const mongoose = require("mongoose");
-const ServerModel = require("./db/models/Server");
 const GameModel = require("./db/models/Game");
-
-const axios = require("axios");
+const ServerSnapshotModel = require("./db/models/ServerSnapshot");
 
 module.exports = async (req, res) => {
   try {
@@ -37,14 +35,12 @@ module.exports = async (req, res) => {
         };
         const gameModel = await GameModel.findOne({ _id: game });
         if (!gameModel) throw createError(404, "unknown game");
-        const servers = await ServerModel.find({ game });
-        if (!servers || !servers.length) send(res, 200, []);
-        const data = {
-          type: gameModel.type,
-          hosts: servers.map(({ host, port }) => `${host}:${port}`)
-        };
-        const result = await axios.get(process.env.RELAY_URL, { data });
-        return send(res, 200, Array.isArray(result?.data) ? result.data : []);
+        const serverSnapshots = await ServerSnapshotModel.find({ game });
+        return send(
+          res,
+          200,
+          Array.isArray(serverSnapshots) ? serverSnapshots : []
+        );
       }
       throw createError(400, "invalid format");
     }
