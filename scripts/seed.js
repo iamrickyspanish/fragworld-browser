@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const Server = require("../models/Server");
-const Game = require("../models/Game");
+const Server = require("../db/models/Server");
+const Game = require("../db/models/Game");
 
-const games = require("./games.json");
-const servers = require("./servers.json");
+const games = require("../db/seed/games.json");
+const servers = require("../db/seed/servers.json");
 
 const run = async () => {
   try {
