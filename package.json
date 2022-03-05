@@ -23,7 +23,6 @@
     "axios": "^0.26.0",
     "lodash": "^4.17.21",
     "micro": "^9.3.4",
-    "micro-cors": "^0.1.1",
     "micro-dev": "^3.0.0",
     "micro-query": "^0.3.0",
     "mongoose": "^6.2.1"

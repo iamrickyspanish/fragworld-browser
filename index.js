@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     if (req.method === "GET") {
       if (req.url.startsWith("/games")) {
         const games = await GameModel.find({});
-        send(res, 200, games);
+        return send(res, 200, games);
       } else if (req.url.startsWith("/servers")) {
         let bodyData = {};
         try {
