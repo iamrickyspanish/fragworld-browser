@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "/bin/bash ./start-worker.sh & micro",
     "dev": "/bin/bash ./start-worker.sh & micro-dev -i db",
-    "db:seed": "scripts/seedDB.js"
+    "db:seed": "node scripts/seedDB.js"
   },
   "repository": {
     "type": "git",
