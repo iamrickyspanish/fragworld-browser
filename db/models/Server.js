@@ -4,6 +4,7 @@ const schema = new mongoose.Schema({
   type: String,
   host: String,
   port: Number,
+  countryCode: String,
   game: {
     type: String, //mongoose.Schema.Types.ObjectId,
     ref: "Game"
