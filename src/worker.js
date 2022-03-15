@@ -38,6 +38,7 @@ const run = async () => {
           ...restServerState,
           host,
           port
+          // countryCode:
         };
       });
       return ServerSnapShotModel.create(serverSnapshots);

@@ -1,3 +1,6 @@
 [submodule "node-qstat-relay"]
 	path = node-qstat-relay
 	url = https://github.com/iamrickyspanish/node-qstat-relay
+[submodule "users-service"]
+	path = users-service
+	url = https://github.com/iamrickyspanish/users-service
