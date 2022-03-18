@@ -24,6 +24,7 @@
     "axios": "^0.26.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
+    "koa-session": "^6.2.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.2.1"
   },
