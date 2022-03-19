@@ -6,6 +6,8 @@ services:
     container_name: node-qstat-relay
     volumes:
       - "./node-qstat-relay:/app"
+    logging:
+      driver: none
   mongo:
     image: mongo:4.0
     restart: always
@@ -13,9 +15,12 @@ services:
       - "./db/data:/data/db"
       - "./db/migrations:/db/migrations"
       - "./db/seed:/db/seed"
+      - "./db/scripts:/db/scripts"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    logging:
+      driver: none
   users-service:
     build: ./users-service
     container_name: users-service
@@ -62,6 +67,8 @@ services:
       - "./nginx.conf:/etc/nginx/nginx.conf:ro"
     links:
       - api
+    logging:
+      driver: none
   api:
     build: .
     volumes:
@@ -74,6 +81,8 @@ services:
     environment:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
       RELAY_URL: http://relay:3000/
+      FAVORITES_SERVICE_URL: http://favorites-service:3000
+      USERS_SERVICE_URL: http://users-service:3000
     container_name: server-browser-api
 volumes:
   redis:
