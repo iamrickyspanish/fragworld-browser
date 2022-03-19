@@ -7,7 +7,7 @@ services:
     volumes:
       - "./node-qstat-relay:/app"
   mongo:
-    image: mongo
+    image: mongo:4.0
     restart: always
     volumes:
       - "./db/data:/data/db"
@@ -16,6 +16,24 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+  users-service:
+    build: ./users-service
+    container_name: users-service
+    volumes:
+      - "./users-service:/app"
+    environment:
+      DB_HOST: mongodb://root:root@mongo:27017/fragworld-users?authSource=admin
+    links:
+      - mongo
+  favorites-service:
+    build: ./favorites-service
+    container_name: favorites-service
+    volumes:
+      - "./favorites-service:/app"
+    environment:
+      DB_HOST: mongodb://root:root@mongo:27017/fragworld-favorites?authSource=admin
+    links:
+      - mongo
   # mongo-express:
   #   image: mongo-express
   #   restart: always
@@ -51,6 +69,8 @@ services:
     links:
       - mongo
       - relay
+      - users-service
+      - favorites-service
     environment:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
       RELAY_URL: http://relay:3000/
