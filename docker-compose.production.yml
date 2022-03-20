@@ -9,7 +9,7 @@ services:
     logging:
       driver: none
   mongo:
-    image: mongo:4.0
+    image: mongo
     restart: always
     volumes:
       - "./db/data:/data/db"
