@@ -13,9 +13,9 @@ const run = async () => {
     await mongoose.connect(process.env.DB_HOST);
     await Game.remove({});
     await Server.remove({});
+    await seedUsers();
     const savedGames = await seedGames();
     await seedServers(savedGames);
-    await seedUsers();
     mongoose.connection.close();
   } catch (err) {
     console.error(`DB ${err}`);
@@ -41,8 +41,8 @@ const seedServers = async (games) =>
 
 const seedUsers = async () =>
   Promise.all(
-    users.map((user) => {
-      const { data } = await axios.post(process.env.DB_HOST, user);
+    users.map(async (user) => {
+      const { data } = await axios.post(process.env.USERS_SERVICE_URL, user);
       return data;
     })
   );

@@ -90,5 +90,5 @@ services:
     ports:
       - "3003:3000"
     restart: always
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
