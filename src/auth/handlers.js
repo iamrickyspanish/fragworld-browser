@@ -15,7 +15,7 @@ const login = async (ctx, next) => {
     ctx.body = user;
     next();
   } catch (e) {
-    ctx.throwError(401, "piss off");
+    ctx.throw(401, "piss off");
   }
 };
 

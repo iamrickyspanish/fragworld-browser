@@ -39,23 +39,23 @@ services:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-favorites?authSource=admin
     links:
       - mongo
-  # mongo-express:
-  #   image: mongo-express
-  #   restart: always
-  #   ports:
-  #     - 8181:8081
-  #   environment:
-  #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: root
-  #     ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
-  # webapp:
-  #   build: rcon-ui/
-  #   container_name: "webapp"
-  #   volumes:
-  #     - "./rcon-ui:/app"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - REACT_APP_PROXY=https://panel.frag.world/api/
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8181:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+  webapp:
+    build: rcon-ui/
+    container_name: "webapp"
+    volumes:
+      - "./rcon-ui:/app"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_PROXY=https://panel.frag.world/api/
   nginx:
     image: "nginx:alpine"
     container_name: frontproxy
