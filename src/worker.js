@@ -37,7 +37,7 @@ const run = async () => {
           game,
           ...restServerState,
           host,
-          serverId: servers.find((server) => { host === server.host && port === server.port})?._id,
+          serverId: servers.find((server) => host === server.host && port === server.port)?._id,
           port
           // countryCode:
         };
