@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
       //   favorites = favorites.map()
       return send(res, 200, favorites);
     case "POST":
-      const data = json(req);
+      const data = await json(req);
       const favorite = await dbService.create(data);
       return send(res, 201, favorite);
     case "DELETE":
