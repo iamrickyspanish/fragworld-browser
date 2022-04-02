@@ -20,9 +20,11 @@ module.exports = async (req, res) => {
   switch (req.method) {
     case "GET":
       const queryData = query(req);
-      if (!queryData.userId) throw createError(400, "more information needed");
+      if (!queryData.userId) throw createError(400, "more information needed: userId");
 
       const favorites = await dbService.index(queryData);
+      // if (queryData.game)
+      //   favorites = favorites.map()
       return send(res, 200, favorites);
     case "POST":
       const data = json(req);

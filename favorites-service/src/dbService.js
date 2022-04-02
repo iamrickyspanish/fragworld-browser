@@ -54,7 +54,7 @@ class FavoriteService {
 
   async create(data = {}) {
     const { userId, serverId } = data;
-    if (this.find({ userId, serverId }).length) throw "favorite alreay exists";
+    if (await Favorite.find({ userId, serverId }).length) throw "favorite alreay exists";
     return await Favorite.create({ userId, serverId });
   }
 }
