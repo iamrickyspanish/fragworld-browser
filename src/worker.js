@@ -33,11 +33,12 @@ const run = async () => {
       const serverSnapshots = serverStates.map((serverState) => {
         const { host: hostAndPort, ...restServerState } = serverState;
         const [host, port] = hostAndPort.split(":");
+        const server = servers.find((server) => host === server.host && Number(port) === Number(server.port))
         return {
           game,
           ...restServerState,
           host,
-          serverId: servers.find((server) => host === server.host && port === server.port)?._id,
+          serverId: server?._id,
           port
           // countryCode:
         };
