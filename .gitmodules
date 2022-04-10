@@ -4,3 +4,6 @@
 [submodule "users-service"]
 	path = users-service
 	url = https://github.com/iamrickyspanish/users-service
+[submodule "rcon-relay"]
+	path = rcon-relay
+	url = https://github.com/iamrickyspanish/rcon-relay
