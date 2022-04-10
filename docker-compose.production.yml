@@ -8,6 +8,13 @@ services:
       - "./node-qstat-relay:/app"
     logging:
       driver: none
+  rcon-relay:
+    build: rcon-relay/
+    container_name: relay
+    volumes:
+      - "./rcon-relay:/app"
+    environment:
+      - CORS_ORIGIN=http://127.0.0.1:3001
   mongo:
     image: mongo
     restart: always
@@ -69,6 +76,16 @@ services:
       - api
     logging:
       driver: none
+  webapp:
+    build: fragworld-ui/
+    container_name: "fragworld-ui"
+    volumes:
+      - "./fragworld-ui:/app"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_PROXY=https://frag.world:3003/api
+    ports:
+      - "3001:3000"
   api:
     build: .
     volumes:
@@ -78,6 +95,7 @@ services:
       - relay
       - users-service
       - favorites-service
+      - rcon-relay
     environment:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
       RELAY_URL: http://relay:3000/

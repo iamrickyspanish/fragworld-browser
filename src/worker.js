@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const ServerModel = require("../db/models/Server");
 const ServerSnapShotModel = require("../db/models/ServerSnapshot");
 const GameModel = require("../db/models/Game");
+const CountryModel = require("../db/models/Country");
 const axios = require("axios");
 const groupBy = require("lodash/groupBy");
 
@@ -30,19 +31,29 @@ const run = async () => {
         (server) => `${server.host}:${server.port}`
       );
       const serverStates = await fetchServers(gameData.type, hosts);
-      const serverSnapshots = serverStates.map((serverState) => {
-        const { host: hostAndPort, ...restServerState } = serverState;
-        const [host, port] = hostAndPort.split(":");
-        const server = servers.find((server) => host === server.host && Number(port) === Number(server.port))
-        return {
-          game,
-          ...restServerState,
-          host,
-          serverId: server?._id,
-          port
-          // countryCode:
-        };
-      });
+      const serverSnapshots = await Promise.all(
+        serverStates.map(async (serverState) => {
+          const { host: hostAndPort, ...restServerState } = serverState;
+          const [host, port] = hostAndPort.split(":");
+          const server = servers.find(
+            (server) =>
+              host === server.host && Number(port) === Number(server.port)
+          );
+          const country = await CountryModel.findOne({
+            _id: server?.countryCode
+          });
+
+          return {
+            game,
+            ...restServerState,
+            host,
+            serverId: server?._id,
+            countryCode: server?.countryCode,
+            countryName: country?.name,
+            port
+          };
+        })
+      );
       return ServerSnapShotModel.create(serverSnapshots);
     }, Promise.resolve());
 

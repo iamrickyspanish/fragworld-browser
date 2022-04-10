@@ -8,7 +8,6 @@ const worker = async (ips = []) => {
   try {
     await mongoose.connect(process.env.DB_HOST);
     const servers = await ServerModel.find({});
-    // console.log("servers", servers);
     await Promise.all(servers.map(async (server) => {
         console.log("fetch for", server.host)
         const { data: locationData } = await axios.get(mapIpToURL(server.host))

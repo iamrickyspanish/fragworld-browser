@@ -3,17 +3,21 @@ const axios = require("axios");
 
 const Server = require("../db/models/Server");
 const Game = require("../db/models/Game");
+const Country = require("../db/models/Country");
 
 const games = require("../db/seed/games.json");
 const servers = require("../db/seed/servers.json");
 const users = require("../db/seed/users.json");
+const countries = require("../db/seed/countries.json");
 
 const run = async () => {
   try {
     await mongoose.connect(process.env.DB_HOST);
     await Game.remove({});
     await Server.remove({});
-    await seedUsers();
+    await Country.remove({});
+    // await seedUsers();
+    await seedCountries();
     const savedGames = await seedGames();
     await seedServers(savedGames);
     mongoose.connection.close();
@@ -46,5 +50,9 @@ const seedUsers = async () =>
       return data;
     })
   );
+
+const seedCountries = async () =>
+  Promise.all(countries.map((country) => Country.create({ ...country })));
+
 
 run();

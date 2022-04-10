@@ -1,6 +1,7 @@
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 const session = require("koa-session");
+const cors = require('@koa/cors');
 
 const serversRouter = require("./src/servers/router");
 const gamesRouter = require("./src/games/router");
@@ -16,6 +17,11 @@ const SESSION_CONFIG = {
 };
 
 const app = new Koa();
+
+if (process.env.NODE_ENV !== "production")
+  app.use(cors({
+    origin: process.env.CORS_ORIGIN
+  }))
 
 app.keys = ["secret-new", "secret-old"];
 

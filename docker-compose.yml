@@ -41,6 +41,15 @@ services:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-users?authSource=admin
     links:
       - mongo
+    logging:
+      driver: none
+  rcon-relay:
+    build: rcon-relay/
+    container_name: rcon-relay
+    volumes:
+      - "./rcon-relay:/app"
+    logging:
+      driver: none
   favorites-service:
     build: ./favorites-service
     container_name: favorites-service
@@ -50,6 +59,8 @@ services:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-favorites?authSource=admin
     links:
       - mongo
+    logging:
+      driver: none
   # sessions-service:
   #   build: ./sessions-service
   #   container_name: sessions-service
@@ -72,12 +83,25 @@ services:
   #       # - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
   #   environment:
   #     REDIS_REPLICATION_MODE: master
+  webapp:
+    build: fragworld-ui/
+    container_name: "fragworld-ui"
+    volumes:
+      - "./fragworld-ui:/app"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_PROXY=http://127.0.0.1:3003
+    ports:
+      - "3001:3000"
+    # command: /bin/bash -c "npm start"
   api:
     environment:
       DB_HOST: mongodb://root:root@mongo:27017/fragworld-browser?authSource=admin
       RELAY_URL: http://relay:3000/
+      RCON_RELAY_URL: http://rcon-relay:3000/
       FAVORITES_SERVICE_URL: http://favorites-service:3000
       USERS_SERVICE_URL: http://users-service:3000
+      CORS_ORIGIN: http://127.0.0.1:3001
     build: .
     container_name: server-browser-api
     links:
@@ -85,6 +109,7 @@ services:
       - relay
       - users-service
       - favorites-service
+      - rcon-relay
     volumes:
       - ".:/app"
     ports:
