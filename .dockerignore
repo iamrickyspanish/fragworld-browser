@@ -3,3 +3,4 @@ db/data
 *Dockerfile*
 *docker-compose*
 node_modules
+fragworld-ui/node_modules
