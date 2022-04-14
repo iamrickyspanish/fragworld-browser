@@ -14,6 +14,7 @@ const Item = ({
   onToggleFull,
   ...restProps
 }) => {
+  console.log("data", data)
   return (
     <Box {...restProps} background="white" direction="column">
       <ServerInfoRow

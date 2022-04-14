@@ -13,6 +13,7 @@ import Logo from "./Logo";
 import Auth from "Auth";
 import Card from "Shared/Card";
 import { RESPONSIVE_SECTIONS } from "App/State/Provider";
+import theme from "theme"
 
 const queryCache = new QueryClient({
   defaultOptions: {
@@ -81,7 +82,7 @@ function Primitive() {
 
 export default () => {
   return (
-    <Grommet>
+    <Grommet theme={theme}>
       <QueryClientProvider client={queryCache}>
         <StateProvider>
           <Primitive />

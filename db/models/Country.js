@@ -5,7 +5,9 @@ const schema = new mongoose.Schema({
     type: String,
     length: 2
   },
-  name: String
+  name: String,
+  region: String,
+  subRegion: String
 });
 
 const CountryModel = mongoose.model("Country", schema);

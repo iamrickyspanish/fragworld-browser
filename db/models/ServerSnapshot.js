@@ -6,6 +6,7 @@ const schema = new mongoose.Schema({
   port: Number,
   countryCode: { type: String, lenght: 2 },
   countryName: String,
+  region: String,
   players: Number,
   maxPlayers: Number,
   map: String,

@@ -54,7 +54,7 @@ export default ({
           activeSection === RESPONSIVE_SECTIONS.USER ? "dimgrey" : "inherit"
         }
       >
-        <User color="white" />
+        <User color="white"  />
       </Box>
     </Box>
   );

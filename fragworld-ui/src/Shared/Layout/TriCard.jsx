@@ -124,7 +124,7 @@ export default function TriCardLayout(props) {
         as={Text}
         color={props.color}
         fill="horizontal"
-        pad={{ horizontal: "medium", bottom: "small" }}
+        // pad={{ horizontal: "medium", bottom: "small" }}
       >
         {renderOrFnCall(props.footer)}
       </Box>

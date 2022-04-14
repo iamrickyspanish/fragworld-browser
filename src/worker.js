@@ -50,6 +50,7 @@ const run = async () => {
             serverId: server?._id,
             countryCode: server?.countryCode,
             countryName: country?.name,
+            regionName: country?.region,
             port
           };
         })
