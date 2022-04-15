@@ -10,10 +10,8 @@ const MessageWrapper = (props) => (
     pad="large"
     align="center"
     justify="center"
-    border={{ side: "top", color: "lightgrey" }}
-  >
-    {props.children}
-  </Box>
+    {...props}
+  />
 );
 
 const List = ({ children, items, isLoading, ...restProps }) => {
@@ -42,14 +40,15 @@ const List = ({ children, items, isLoading, ...restProps }) => {
           <MessageWrapper>NO MORE ITEMS AVAILABLE</MessageWrapper>
         </>
       ) : (
-        <MessageWrapper>NO ITEMS AVAILABLE</MessageWrapper>
+        <MessageWrapper fill>NO ITEMS AVAILABLE</MessageWrapper>
       )}
     </Box>
   );
 };
 
 List.propTypes = {
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  items: PropTypes.array.isRequired
 };
 
 List.defaultProps = {

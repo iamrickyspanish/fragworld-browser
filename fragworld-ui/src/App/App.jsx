@@ -13,7 +13,7 @@ import Logo from "./Logo";
 import Auth from "Auth";
 import Card from "Shared/Card";
 import { RESPONSIVE_SECTIONS } from "App/State/Provider";
-import theme from "theme"
+import theme from "theme";
 
 const queryCache = new QueryClient({
   defaultOptions: {
@@ -37,13 +37,13 @@ function Primitive() {
   } = useAppState();
   // const currentToast = !!toasts.length && toasts[toasts.length - 1];
 
-  const isLeftSideResponsive = viewport !== "large";
-  const isRightSideResponsive = viewport === "small";
+  const isLeftSideResponsive = true; //viewport !== "large";
+  const isRightSideResponsive = true; //viewport === "small";
 
   return (
     <TriCardLayout
       // background="brand"
-      header={<Logo color="white" margin={{ left: "xsmall" }} />}
+      header={<Logo color="white" margin={{ horizontal: "auto" }} />}
       main={<ServersSection />}
       right={
         <Card>

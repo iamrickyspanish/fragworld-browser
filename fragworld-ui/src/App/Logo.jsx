@@ -1,8 +1,8 @@
 import React from "react";
-import { Text } from "grommet";
+import { Box, Text } from "grommet";
 
 export default (props) => (
-  <Text color="brand" {...props} weight="bold" >
+  <Box as={Text} color="brand" {...props} weight="bold" >
     FRAG.WORLD
-  </Text>
+  </Box>
 );

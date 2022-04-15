@@ -1,3 +1,3 @@
-import Section from "./Section.jsx";
+import Index from "./Index.jsx";
 
-export default Section;
+export default Index;

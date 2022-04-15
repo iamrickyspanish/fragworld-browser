@@ -5,7 +5,6 @@ import {
   FormField,
   TextInput,
   CheckBox,
-  Button,
   Select
 } from "grommet";
 
@@ -91,13 +90,13 @@ export const Full = ({ values, setValues, ...restProps }) => {
     >
       <Box
         gap="small"
-        direction="row"
+        direction="column"
         margin={{ bottom: "medium" }}
         {...restProps}
       >
         <FieldGroup label="players">
           <Box direction="row" gap="medium">
-            <FormField label="min" width="70px">
+            <FormField label="min" width="60px">
               <TextInput
                 name="minPlayers"
                 type="number"
@@ -105,7 +104,7 @@ export const Full = ({ values, setValues, ...restProps }) => {
                 placeholder="-"
               />
             </FormField>
-            <FormField label="max" width="70px">
+            <FormField label="max" width="60px">
               <TextInput
                 name="maxPlayers"
                 type="number"
@@ -132,13 +131,11 @@ export const Full = ({ values, setValues, ...restProps }) => {
           </FormField>
         </FieldGroup>
       </Box>
-      <FieldGroup label="game" flex margin={{ bottom: "medium" }}>
+      <FieldGroup label="game" flex>
         <FormField label="map">
           <TextInput name="map" placeholder="Search fro map" />
         </FormField>
       </FieldGroup>
-      {/* <Button label="filter" type="submit" margin={{ right: "small" }} /> */}
-      {/* <Button label="reset" type="reset" /> */}
     </Form>
   );
 };

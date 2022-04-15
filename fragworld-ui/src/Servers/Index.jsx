@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Button, Layer, Text, Spinner } from "grommet";
+import {
+  Box,
+  Grid,
+  Button,
+  Layer,
+  Text,
+  Spinner,
+  ResponsiveContext
+} from "grommet";
 import { Refresh, Close, Filter, Location } from "grommet-icons";
 import { useQuery } from "react-query";
 
@@ -11,14 +19,31 @@ import useAppState from "App/State/use";
 import { Full as FilterForm, filterItems } from "./Filter";
 import ServerInfoRow from "./InfoRow";
 import GameSelect from "Games/Select";
-
-export const Context = React.createContext();
-
-const ServersIndex = (props) => {
+export default () => {
   const [filterFormValues, setFilterFormValues] = React.useState({});
-  const { game, favorites, loggedIn } = useAppState();
-
   const [showFilter, setShowFilter] = React.useState(false);
+  const {
+    favorites,
+    toggleFavorite,
+    isFetchingFavorites,
+    game,
+    setGame,
+    loggedIn
+  } = useAppState();
+
+  const {
+    data: servers = [],
+    isFetching,
+    refetch: refetchServers
+  } = useQuery(["servers", serverParams], () => getServers(serverParams));
+
+  const handleGameChange = React.useCallback(({ value: nextGame }) => {
+    setGame(nextGame);
+  }, []);
+
+  const handleRefresh = React.useCallback(() => {
+    refetchServers();
+  }, [refetchServers]);
 
   const serverParams = { game };
 
@@ -28,12 +53,6 @@ const ServersIndex = (props) => {
       favoritesOnly: false
     }));
   }, [loggedIn]);
-
-  const {
-    data: servers = [],
-    isFetching: isFetchingServrs,
-    refetch: refetchServers
-  } = useQuery(["servers", serverParams], () => getServers(serverParams));
 
   React.useEffect(() => {
     game && refetchServers();
@@ -49,19 +68,12 @@ const ServersIndex = (props) => {
     filterFormValues
   );
 
-  const ctx = {
-    filterFormValues,
-    setFilterFormValues,
-    setShowFilter,
-    game,
-    items: filteredServers,
-    isFetching: isFetchingServrs,
-    refetch: refetchServers
-  };
+  const viewport = React.useContext(ResponsiveContext);
+  const isMobile = viewport === "small";
 
   return (
-    <Context.Provider value={ctx}>
-      {showFilter && (
+    <>
+      {isMobile && showFilter && (
         <Layer
           modal
           onClickOutside={() => setShowFilter(false)}
@@ -84,110 +96,116 @@ const ServersIndex = (props) => {
           </Box>
         </Layer>
       )}
-      {props.children}
-    </Context.Provider>
-  );
-};
+      <Grid
+        fill
+        rows={["auto", "flex"]}
+        columns={["flex", "auto"]}
+        areas={[
+          { name: "header", start: [0, 0], end: [0, 0] },
+          { name: "filter", start: [1, 0], end: [1, 1] },
+          { name: "list", start: [0, 1], end: [0, 1] }
+        ]}
+      >
+        <Box
+          direction="row"
+          pad={{ top: "small" }}
+          gridArea="header"
+          elevation="small"
+          border={{ side: "bottom", color: "lightgrey" }}
+        >
+          <Box flex pad={{ bottom: "small", horizontal: "medium" }}>
+            <Box direction="row" align="center" margin={{ bottom: "small" }}>
+              <Box flex>
+                <GameSelect
+                  value={game}
+                  onChange={handleGameChange}
+                  margin={{ vertical: "small", right: "small" }}
+                />
+              </Box>
+              {isMobile && (
+                <>
+                  <Button
+                    plain
+                    label="Filter"
+                    icon={<Filter />}
+                    onClick={() => setShowFilter(true)}
+                    margin={{ right: "xsmall" }}
+                  />
+                  <Box
+                    margin={{ horizontal: "small" }}
+                    border="left"
+                    height="16px"
+                  ></Box>
+                </>
+              )}
+              <Button
+                onClick={handleRefresh}
+                icon={isFetching ? <Spinner /> : <Refresh />}
+                plain
+              />
+            </Box>
 
-const Body = () => {
-  const { items, isFetching, error } = React.useContext(Context);
-  const { favorites, toggleFavorite, isFetchingFavorites } = useAppState();
-  return (
-    <List
-      margin={{ top: "small" }}
-      items={items}
-      isLoading={isFetching}
-      error={error}
-      background="light-2"
-    >
-      {(item, i) => (
-        <Box background="white">
-          <Item
+            <ServerInfoRow
+              favoriteControl={
+                <FavoriteIcon
+                  active={filterFormValues.favoritesOnly}
+                  onClick={() => {
+                    setFilterFormValues({
+                      ...filterFormValues,
+                      favoritesOnly: !filterFormValues.favoritesOnly
+                    });
+                  }}
+                />
+              }
+              mapInfo="map"
+              playersInfo="players"
+              locationInfo={<Location />}
+            />
+          </Box>
+        </Box>
+        <Box
+          gridArea="list"
+          // border={isMobile ? false : { side: "right", color: "light-5" }}
+        >
+          <List
             flex
-            margin={{ horizontal: "medium" }}
-            pad={{ vertical: "small" }}
-            key={item._id}
-            disableFavorite={isFetchingFavorites}
-            isFavorite={
-              !!favorites.find(({ serverId }) => serverId === item.serverId)
-            }
-            onToggleFavorite={() => toggleFavorite(item.serverId)}
-            data={item}
-            border={
-              i === items.length - 1
-                ? false
-                : { color: "lightgrey", side: "bottom" }
-            }
-          />
+            items={filteredServers}
+            isLoading={isFetching}
+            background="light-5"
+            pad={{ top: "xsmall" }}
+          >
+            {(item, i) => (
+              <Box>
+                <Item
+                  flex
+                  // round="xsmall"
+                  margin={{ horizontal: "small", top: "xsmall" }}
+                  pad={{ vertical: "small", horizontal: "small" }}
+                  key={item._id}
+                  disableFavorite={isFetchingFavorites}
+                  isFavorite={
+                    !!favorites.find(
+                      ({ serverId }) => serverId === item.serverId
+                    )
+                  }
+                  onToggleFavorite={() => toggleFavorite(item.serverId)}
+                  data={item}
+                />
+              </Box>
+            )}
+          </List>
+          {/* </Box> */}
         </Box>
-      )}
-    </List>
+        {!isMobile && (
+          <Box width="420px" gridArea="filter" pad="medium">
+            <FilterForm
+              values={filterFormValues}
+              setValues={setFilterFormValues}
+            />
+          </Box>
+        )}
+        {/* </Box> */}
+      </Grid>
+    </>
   );
 };
-
-const Head = () => {
-  const { game, setGame } = useAppState();
-  const { isFetching } = React.useContext(Context);
-
-  const {
-    refetch,
-    filterFormValues,
-    setFilterFormValues,
-    setShowFilter
-  } = React.useContext(Context);
-  const handleGameChange = React.useCallback(({ value: nextGame }) => {
-    setGame(nextGame);
-  }, []);
-
-  const handleRefresh = React.useCallback(() => {
-    refetch();
-  }, [refetch]);
-
-  return (
-    <Box pad={{ bottom: "small", horizontal: "medium" }}>
-      <Box direction="row" align="center" margin={{ bottom: "small" }}>
-        <Box flex>
-          <GameSelect
-            value={game}
-            onChange={handleGameChange}
-            margin={{ vertical: "small", right: "small" }}
-          />
-        </Box>
-        <Button
-          plain
-          label="Filter"
-          icon={<Filter />}
-          onClick={() => setShowFilter(true)}
-          margin={{ right: "xsmall" }}
-        />
-        <Box margin={{ horizontal: "small" }} border="left" height="16px"></Box>
-        <Button
-          onClick={handleRefresh}
-          icon={isFetching ? <Spinner /> : <Refresh />}
-          plain
-        />
-      </Box>
-      <ServerInfoRow
-        favoriteControl={
-          <FavoriteIcon
-            active={filterFormValues.favoritesOnly}
-            onClick={() => {
-              setFilterFormValues({
-                ...filterFormValues,
-                favoritesOnly: !filterFormValues.favoritesOnly
-              });
-            }}
-          />
-        }
-        mapInfo="map"
-        playersInfo="players"
-        locationInfo={<Location />}
-      />
-    </Box>
-  );
-};
-
-ServersIndex.Head = Head;
-ServersIndex.Body = Body;
-
-export default ServersIndex;
