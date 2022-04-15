@@ -1,13 +1,13 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Grommet, Notification } from "grommet";
+import { Grommet, Notification, Box, Button } from "grommet";
+import { Terminal, User, Configure } from "grommet-icons";
 
 import "../styles.css";
 import ServersSection from "Servers";
 import UserDashboard from "User/Dashboard";
 import StateProvider from "./State/Provider";
 import useAppState from "./State/use";
-import Footer from "./Footer";
 import TriCardLayout from "Shared/Layout/TriCard";
 import Logo from "./Logo";
 import Auth from "Auth";
@@ -37,13 +37,24 @@ function Primitive() {
   } = useAppState();
   // const currentToast = !!toasts.length && toasts[toasts.length - 1];
 
-  const isLeftSideResponsive = true; //viewport !== "large";
-  const isRightSideResponsive = true; //viewport === "small";
+  const isLeftSideResponsive = true;
+  const isRightSideResponsive = true;
 
   return (
     <TriCardLayout
       // background="brand"
-      header={<Logo color="white" margin={{ horizontal: "auto" }} />}
+      header={
+        <Box direction="row" align="center">
+          <Box width="80px">
+            <Button icon={<Terminal color="white" />} onClick={focusRcon} plain />
+          </Box>
+          <Button margin={{ horizontal: "auto" }} label={<Logo color="white"  />} plain onClick={focusServers} />
+          <Box direction="row" gap="medium" width="80px" justify="end">
+            <Button icon={<Configure color="white" />} onClick={focusUser} plain/>
+            <Button icon={<User color="white" />} onClick={focusUser} plain/>
+          </Box>
+        </Box>
+      }
       main={<ServersSection />}
       right={
         <Card>
@@ -68,14 +79,6 @@ function Primitive() {
       isLeftActive={activeResponsiveSection === RESPONSIVE_SECTIONS.RCON}
       isRightActive={activeResponsiveSection === RESPONSIVE_SECTIONS.USER}
       onMainBackdropClick={focusServers}
-      footer={
-        <Footer
-          onRconClick={focusRcon}
-          onServersClick={focusServers}
-          onUserClick={focusUser}
-          activeSection={activeResponsiveSection}
-        />
-      }
     />
   );
 }

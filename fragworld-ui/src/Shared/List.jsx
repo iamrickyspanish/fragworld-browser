@@ -7,7 +7,7 @@ const MessageWrapper = (props) => (
     as={Text}
     weight="bold"
     color="grey"
-    pad="large"
+    pad="medium"
     align="center"
     justify="center"
     {...props}

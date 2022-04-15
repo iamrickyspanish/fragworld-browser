@@ -15,7 +15,7 @@ export default ({
         {mapInfo}
       </Box>
       <Box width="130px">{playersInfo}</Box>
-      <Box align="flex-end" width="100px">
+      <Box align="flex-end" width="155px">
         {locationInfo}
       </Box>
     </Box>

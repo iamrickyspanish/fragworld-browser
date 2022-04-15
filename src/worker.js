@@ -51,6 +51,7 @@ const run = async () => {
             countryCode: server?.countryCode,
             countryName: country?.name,
             regionName: country?.region,
+            subRegionName: country.subRegion,
             port
           };
         })

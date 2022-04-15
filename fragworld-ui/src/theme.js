@@ -25,7 +25,13 @@ export default {
   text: {
     medium: {
       size: "14px"
-    }
+    },
+    small: {
+      size: "11px"
+    },
+    xsmall: {
+      size: "8px"
+    },
   },
   icon: {
     size: {

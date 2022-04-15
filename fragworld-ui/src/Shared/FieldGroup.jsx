@@ -3,7 +3,13 @@ import { Box, Text } from "grommet";
 
 export default ({ children, label, ...restProps }) => {
   return (
-    <Box border={{ color: "light-5", size: "small" }} round="xsmall" {...restProps} pad="small" style={{ position: "relative" }}>
+    <Box
+      border={{ color: "light-5", size: "small" }}
+      round="xsmall"
+      {...restProps}
+      pad={{ horizontal: "small", vertical: "xsmall" }}
+      style={{ position: "relative" }}
+    >
       {label && (
         <Box
           as={Text}

@@ -180,7 +180,7 @@ export default () => {
                   flex
                   // round="xsmall"
                   margin={{ horizontal: "small", top: "xsmall" }}
-                  pad={{ vertical: "small", horizontal: "small" }}
+                  pad={{ top: "xsmall", bottom: "small", horizontal: "small" }}
                   key={item._id}
                   disableFavorite={isFetchingFavorites}
                   isFavorite={

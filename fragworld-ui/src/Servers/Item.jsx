@@ -1,9 +1,25 @@
 import React from "react";
-import { Box } from "grommet";
+import { Box, Text } from "grommet";
+import { Copy } from "grommet-icons";
 
 import Flag from "Shared/Flag";
 import ServerInfoRow from "./InfoRow";
 import FavoriteIcon from "Favorite/Icon";
+
+const LocationTag = ({ region, countryCode }) => (
+  <Box
+    background="light-5"
+    round="medium"
+    direction="row"
+    align="center"
+    pad={{ horizontal: "6px" }}
+  >
+    <Text size="xsmall" style={{ textTransform: "uppercase" }}>
+      {region}
+    </Text>
+    <Flag margin={{ left: "4px" }} countryCode={countryCode} />
+  </Box>
+);
 
 const Item = ({
   data,
@@ -14,7 +30,6 @@ const Item = ({
   onToggleFull,
   ...restProps
 }) => {
-  console.log("data", data)
   return (
     <Box {...restProps} background="white" direction="column">
       <ServerInfoRow
@@ -27,13 +42,21 @@ const Item = ({
         }
         mapInfo={data.map}
         playersInfo={`${data.players}/${data.maxPlayers}`}
-        locationInfo={<Flag  countryCode={data.countryCode} />}
+        locationInfo={
+          <LocationTag
+            region={data.regionName}
+            countryCode={data.countryCode}
+          />
+        }
       />
       <Box>
         {data.name} <br />
-        <small>
-          {data.host}:{data.port}
-        </small>
+        <Box direction="row" align="center" gap="xsmall">
+          <Text size="small">
+            {data.host}:{data.port}
+          </Text>
+          <Copy size="11px" />
+        </Box>
       </Box>
     </Box>
   );

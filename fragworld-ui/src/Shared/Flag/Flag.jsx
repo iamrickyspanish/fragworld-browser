@@ -709,8 +709,9 @@ const Primitive = styled(Box)`
   
 `;
 
-export default ({ countryCode }) => (
+export default ({ countryCode, ...restProps }) => (
   <Primitive
     className={typeof countryCode === "string" ? countryCode.toLowerCase() : ""}
+    {...restProps}
   />
 );
