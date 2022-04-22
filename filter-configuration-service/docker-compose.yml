@@ -25,8 +25,8 @@ services:
     volumes:
       - ".:/app"
     environment:
-      DB_HOST: mongodb://root:root@db:27017/users?authSource=admin
-      TEST_DB_HOST: mongodb://root:root@db:27017/users-test?authSource=admin
+      DB_HOST: mongodb://root:root@db:27017/filter-configs?authSource=admin
+      TEST_DB_HOST: mongodb://root:root@db:27017/filter-configs-test?authSource=admin
     links:
       - db
     ports:

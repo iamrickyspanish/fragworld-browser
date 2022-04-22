@@ -1,16 +1,12 @@
 "use strict";
 
-import mongoose, {
-  Schema,
-  Types as MongooseTypes,
-  Model
-} from "mongoose";
+import mongoose, { Schema, Types as MongooseTypes, Model } from "mongoose";
 
 /* types */
 
 export interface IFilterConfig {
   _id: MongooseTypes.ObjectId;
-  userId: MongooseTypes.ObjectId;
+  userId: string;
   game: string;
   values: any;
 }
@@ -33,10 +29,9 @@ const getUrl = (): string =>
     : process.env.DB_HOST) || "";
 
 const FilterConfigSchema = new Schema<IFilterConfig>({
-  _id: Schema.Types.ObjectId,
-  userId: Schema.Types.ObjectId,
-  game: String,
-  values: Object
+  userId: { type: String, required: true },
+  game: { type: String, required: true },
+  values: { type: Object, required: true }
 });
 
 let FilterConfig: null | Model<IFilterConfig> = null;
@@ -99,7 +94,9 @@ export default class DataService {
   }
 
   async create(data: IFilterConfigCreateData): Promise<IFilterConfig> {
-    const item = await (await FilterConfig!.create(data)).toObject();
+    const newData = {...data, userId: `${data.userId}`}
+    const item = await (await FilterConfig!.create(newData)).toObject();
+
     return item;
   }
 
@@ -108,8 +105,13 @@ export default class DataService {
     data: IFilterConfigUpdateData = {}
   ) {
     if (!mongoose.Types.ObjectId.isValid(_id)) throw this.options.notFoundError;
+    const newData = {...data }
+    if (data.userId) {
+      newData.userId=  `${data.userId}`
+    }
+    
     const item = await FilterConfig!
-      .findOneAndUpdate({ _id }, data, {
+      .findOneAndUpdate({ _id }, newData, {
         new: true
       })
       .lean();
@@ -117,5 +119,3 @@ export default class DataService {
     return item;
   }
 }
-
-// export interface IDataService {}

@@ -1,14 +1,16 @@
 const { client, DB_NAME, COLLECTION_NAME } = require("./fixtures");
 const micro = require("micro");
 const listen = require("test-listen");
-const handler = require("../index");
+const handler = require("../build/index");
 const fetch = require("cross-fetch");
+
+console.log("!!!!!!!!!", handler)
 
 const isEqual = (configA, configB) => {
   return (
-    config.game === configA.game &&
-    config.userId === configA.userId &&
-    Object.keys(config.values).length === Object.keys(configA.values).length
+    configA.game === configB.game &&
+    configA.userId === configB.userId &&
+    Object.keys(configA.values).length === Object.keys(configB.values).length
   );
 };
 
@@ -67,5 +69,6 @@ module.exports = {
   after,
   destroy,
   update,
-  create
+  create,
+  isEqual
 };

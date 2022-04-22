@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "test": "node ./tests/preTest.js && ava -c 1",
+    "test": "npm run build && node ./tests/preTest.js && ava -c 1 ./tests/integration/create.js",
     "build": "tsc",
     "dev": "npm run build && concurrently \"tsc --watch\" \"micro-dev\"",
     "dev-start": "npm run build && micro-dev",
@@ -25,19 +25,12 @@
     "cross-fetch": "^3.1.5",
     "micro-dev": "^3.0.0",
     "mongodb": "^4.5.0",
+    "test-listen": "^1.1.0",
     "typescript": "^4.6.3"
   },
   "dependencies": {
     "micro": "^9.3.4",
     "micro-query": "^0.3.0",
     "mongoose": "^6.3.0"
-  },
-  "ava": {
-    "extensions": {
-      "ts": "module"
-    },
-    "nodeArguments": [
-      "--loader=ts-node/esm"
-    ]
   }
 }

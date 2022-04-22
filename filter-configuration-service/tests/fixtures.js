@@ -20,7 +20,7 @@ const client = new MongoClient(process.env.TEST_DB_HOST);
 
 const DB_NAME = "filter-configs-test";
 const COLLECTION_NAME = "filter-configs";
-
+console.log("????????????????", DB_NAME, process.env.TEST_DB_HOST, COLLECTION_NAME)
 module.exports = {
   configA,
   configB,

@@ -28,10 +28,9 @@ const getUrl = () => (process.env.NODE_ENV === "test"
     ? process.env.TEST_DB_HOST
     : process.env.DB_HOST) || "";
 const FilterConfigSchema = new mongoose_1.Schema({
-    _id: mongoose_1.Schema.Types.ObjectId,
-    userId: mongoose_1.Schema.Types.ObjectId,
-    game: String,
-    values: Object
+    userId: { type: String, required: true },
+    game: { type: String, required: true },
+    values: { type: Object, required: true }
 });
 let FilterConfig = null;
 try {
@@ -81,14 +80,19 @@ class DataService {
         return item;
     }
     async create(data) {
-        const item = await (await FilterConfig.create(data)).toObject();
+        const newData = { ...data, userId: `${data.userId}` };
+        const item = await (await FilterConfig.create(newData)).toObject();
         return item;
     }
     async update(_id, data = {}) {
         if (!mongoose_1.default.Types.ObjectId.isValid(_id))
             throw this.options.notFoundError;
+        const newData = { ...data };
+        if (data.userId) {
+            newData.userId = `${data.userId}`;
+        }
         const item = await FilterConfig
-            .findOneAndUpdate({ _id }, data, {
+            .findOneAndUpdate({ _id }, newData, {
             new: true
         })
             .lean();

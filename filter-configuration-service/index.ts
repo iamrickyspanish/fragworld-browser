@@ -27,10 +27,10 @@ export default async (
   if (req.method === "GET") {
     const id = mapRequestToId(req);
     if (id) {
-        const item = await service.get(id)
-        return send(res, 200, item);
+      const item = await service.get(id);
+      return send(res, 200, item);
     } else {
-      const queryData : IndexQueryParams = query(req);
+      const queryData: IndexQueryParams = query(req);
       if (!queryData.userId) throw createError(400, "userId required");
       const items = await service.index(queryData);
       return send(res, 200, items);
@@ -41,13 +41,13 @@ export default async (
     );
     const newItem = await service.create(data);
     return send(res, 201, newItem);
-  } else if(req.method === "PATCH") {
+  } else if (req.method === "PATCH") {
     const id = mapRequestToId(req);
-    const item = await service.update(id)
+    const item = await service.update(id);
     return send(res, 200, item);
   } else if (req.method === "DELETE") {
     const id = mapRequestToId(req);
-    await service.destroy(id)
-    return send(res, 200, { message: "ok "});
+    await service.destroy(id);
+    return send(res, 200, { message: "ok " });
   }
 };
