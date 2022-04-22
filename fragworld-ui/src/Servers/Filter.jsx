@@ -133,7 +133,7 @@ export const Full = ({ values, setValues, ...restProps }) => {
       </Box>
       <FieldGroup label="game" flex>
         <FormField label="map">
-          <TextInput name="map" placeholder="Search fro map" />
+          <TextInput name="map" placeholder="Search for map" />
         </FormField>
       </FieldGroup>
     </Form>
