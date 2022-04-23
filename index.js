@@ -7,6 +7,7 @@ const serversRouter = require("./src/servers/router");
 const gamesRouter = require("./src/games/router");
 const usersRouter = require("./src/users/router");
 const favoritesRouter = require("./src/favorites/router");
+const filterConfigsRouter = require("./src/filterConfigs/router");
 const authRouter = require("./src/auth/router");
 
 const addRouter = (app, router) =>
@@ -32,5 +33,6 @@ addRouter(app, gamesRouter);
 addRouter(app, serversRouter);
 addRouter(app, usersRouter);
 addRouter(app, favoritesRouter);
+addRouter(app, filterConfigsRouter);
 addRouter(app, authRouter);
 app.listen(3000);

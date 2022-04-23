@@ -43,6 +43,17 @@ services:
       - mongo
     logging:
       driver: none
+  filter-config-service:
+    build: ./filter-config-service
+    container_name: filter-config-service
+    volumes:
+      - "./filter-config-service:/app"
+    environment:
+      DB_HOST: mongodb://root:root@mongo:27017/fragworld-filter-configs?authSource=admin
+    links:
+      - mongo
+    # logging:
+    #   driver: none
   rcon-relay:
     build: rcon-relay/
     container_name: rcon-relay
@@ -93,6 +104,8 @@ services:
       - REACT_APP_PROXY=http://127.0.0.1:3003
     ports:
       - "3001:3000"
+    logging:
+      driver: none
     # command: /bin/bash -c "npm start"
   api:
     environment:
@@ -101,6 +114,7 @@ services:
       RCON_RELAY_URL: http://rcon-relay:3000/
       FAVORITES_SERVICE_URL: http://favorites-service:3000
       USERS_SERVICE_URL: http://users-service:3000
+      FILTER_CONFIG_SERVICE_URL: http://filter-config-service:3000
       CORS_ORIGIN: http://127.0.0.1:3001
     build: .
     container_name: server-browser-api
@@ -109,6 +123,7 @@ services:
       - relay
       - users-service
       - favorites-service
+      - filter-config-service
       - rcon-relay
     volumes:
       - ".:/app"

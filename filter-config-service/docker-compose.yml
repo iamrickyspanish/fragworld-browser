@@ -1,0 +1,35 @@
+version: "3.3"
+services:
+  db:
+    image: "mongo:bionic"
+    container_name: filter-config-db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    # volumes:
+    #   - "./db:/data/db"
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8181:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@db:27017/
+    logging:
+      driver: none
+  api:
+    build: .
+    container_name: filter-config-api
+    volumes:
+      - ".:/app"
+    environment:
+      DB_HOST: mongodb://root:root@db:27017/filter-configs?authSource=admin
+      TEST_DB_HOST: mongodb://root:root@db:27017/filter-configs-test?authSource=admin
+    links:
+      - db
+    ports:
+      - "8000:3000"
+volumes:
+  redis:
